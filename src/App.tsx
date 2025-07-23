@@ -4,13 +4,8 @@ import { fileTree } from "./data/fileTree"
 const App = () => {
 
   return (
-    <div>
-      <FileSyntaxHighlighter fileName="index.tsx" />
-      {
-        fileTree.children?.map((file, index) => (
-          <FileSyntaxHighlighter key={index} fileName={file.name} />
-        ))
-      }
+    <div className="my-5">
+      <FileSyntaxHighlighter fileTree={fileTree} />
     </div>
   )
 }
