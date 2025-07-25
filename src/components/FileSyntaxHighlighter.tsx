@@ -19,8 +19,8 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
         {fileTree.isFolder ? (
           <div onClick={toggle} className="flex items-center">
             {isOpen ? <BottomArrowIcon /> : <RightArrowIcon /> }
-            <RenderFileIcon filename={fileTree.name} />
-            <span>{fileTree.name}</span>
+            <RenderFileIcon filename={fileTree.name} isFolder={fileTree.isFolder} isOpen={isOpen} />
+            <span className="ml-1">{fileTree.name}</span>
           </div>
         ) : (
           <div className="flex items-center">
