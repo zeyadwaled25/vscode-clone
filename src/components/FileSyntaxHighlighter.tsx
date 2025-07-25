@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { IFile } from "../interfaces";
 import BottomArrowIcon from "./svg/Bottom";
 import FileIcon from "./svg/File";
@@ -9,17 +10,30 @@ interface IProps {
 }
 
 const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // Handler
+  const toggle = () => setIsOpen(prev => !prev);
   return (
-    <div className="mb-2 ml-2">
+    <div className="mb-2 ml-2 cursor-pointer">
       <div className="flex items-center mb-1">
-        {fileTree.children ? <BottomArrowIcon /> : <RightArrowIcon />}
-        <span className="mr-2">
-          {fileTree.isFolder ? <FolderIcon /> : <FileIcon />}
-        </span>
-        <span>{fileTree.name}</span>
+        {fileTree.isFolder ? (
+          <div onClick={toggle} className="flex items-center">
+            {isOpen ? <BottomArrowIcon /> : <RightArrowIcon /> }
+            <FolderIcon />
+            <span>{fileTree.name}</span>
+          </div>
+        ) : (
+          <div className="flex items-center">
+            <span className="mr-1">
+              <FileIcon />
+            </span>
+            <span>{fileTree.name}</span>
+          </div>
+        )}
       </div>
-      {
-        fileTree.children && fileTree.children.map((file, index) => (
+      { 
+        isOpen && fileTree.children && fileTree.children.map((file, index) => (
           <FileSyntaxHighlighter key={index} fileTree={file} />
         ))
       }
