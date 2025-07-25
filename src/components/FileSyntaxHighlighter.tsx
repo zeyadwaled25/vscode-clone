@@ -1,8 +1,6 @@
 import { useState } from "react";
 import type { IFile } from "../interfaces";
 import BottomArrowIcon from "./svg/Bottom";
-import FileIcon from "./svg/File";
-import FolderIcon from "./svg/Folder";
 import RightArrowIcon from "./svg/Right";
 import RenderFileIcon from "./RenderFileIcon";
 
@@ -21,8 +19,8 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
         {fileTree.isFolder ? (
           <div onClick={toggle} className="flex items-center">
             {isOpen ? <BottomArrowIcon /> : <RightArrowIcon /> }
-            <FolderIcon />
             <RenderFileIcon filename={fileTree.name} />
+            <span>{fileTree.name}</span>
           </div>
         ) : (
           <div className="flex items-center">
