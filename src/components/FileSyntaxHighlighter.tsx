@@ -4,6 +4,7 @@ import BottomArrowIcon from "./svg/Bottom";
 import FileIcon from "./svg/File";
 import FolderIcon from "./svg/Folder";
 import RightArrowIcon from "./svg/Right";
+import RenderFileIcon from "./RenderFileIcon";
 
 interface IProps {
   fileTree: IFile;
@@ -21,12 +22,12 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
           <div onClick={toggle} className="flex items-center">
             {isOpen ? <BottomArrowIcon /> : <RightArrowIcon /> }
             <FolderIcon />
-            <span>{fileTree.name}</span>
+            <RenderFileIcon filename={fileTree.name} />
           </div>
         ) : (
           <div className="flex items-center">
             <span className="mr-1">
-              <FileIcon />
+              <RenderFileIcon filename={fileTree.name} />
             </span>
             <span>{fileTree.name}</span>
           </div>
