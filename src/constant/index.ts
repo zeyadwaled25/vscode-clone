@@ -5,6 +5,7 @@ export const extensionIconPaths: Record<string, string> = {
   tsx: "/icons/react_ts",
   jsx: "/icons/react",
   html: "/icons/html",
+  css: "/icons/css",
   svg: "/icons/svg",
   gitignore: "/icons/git",
   json: "/icons/nodejs",
