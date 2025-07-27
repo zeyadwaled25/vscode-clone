@@ -3,6 +3,9 @@ import type { IFile } from "../interfaces";
 import BottomArrowIcon from "./svg/Bottom";
 import RightArrowIcon from "./svg/Right";
 import RenderFileIcon from "./RenderFileIcon";
+import { useAppDispatch, type RootState } from "../app/store";
+import { setOpenedFile } from "../app/features/fileTreeSlice";
+import { useSelector } from "react-redux";
 
 interface IProps {
   fileTree: IFile;
@@ -10,6 +13,10 @@ interface IProps {
 
 const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  // Dispatch
+  const dispatch = useAppDispatch();
+  // Selectors
+  const openedFile = useSelector((state: RootState) => state.fileTree.openedFile);
 
   // Handler
   const toggle = () => setIsOpen(prev => !prev);
@@ -23,7 +30,7 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
             <span className="ml-1">{fileTree.name}</span>
           </div>
         ) : (
-          <div className="flex items-center">
+          <div className="flex items-center" onClick={() => dispatch(setOpenedFile([...openedFile, fileTree]))}>
             <span className="mr-1">
               <RenderFileIcon filename={fileTree.name} />
             </span>

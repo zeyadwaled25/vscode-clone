@@ -4,3 +4,11 @@ export interface IFile {
   children?: IFile[];
   content?: string;
 }
+
+export interface IOpenedFile {
+  openedFile: IFile[];
+  clickedFile: {
+    fileName: string;
+    fileContent: string;
+  };
+}
