@@ -1,5 +1,6 @@
-import { setClickedFile } from "../app/features/fileTreeSlice";
-import { useAppDispatch } from "../app/store";
+import { useSelector } from "react-redux";
+import { setActiveTabId, setClickedFile } from "../app/features/fileTreeSlice";
+import { useAppDispatch, type RootState } from "../app/store";
 import type { IFile } from "../interfaces";
 import RenderFileIcon from "./RenderFileIcon";
 import CloseIcon from "./svg/CloseIcon";
@@ -10,17 +11,24 @@ interface IProps {
 
 const OpenedFilesBarTap = ({ file }: IProps) => {
   const dispatch = useAppDispatch();
+  const activeTabId = useSelector((state: RootState) => state.fileTree.activeTabId);
+
   const onClickedFile = () => {
     dispatch(setClickedFile({ fileName: file.name, fileContent: file.content }));
+    dispatch(setActiveTabId(file.id));
   }
 
   return (
-    <div key={file.id} className="flex items-center" onClick={onClickedFile}>
+    <div key={file.id}
+      className={`flex items-center border px-1 border-t-2 border-b-0
+                ${activeTabId === file.id ? "border-t-[#cf6ccf]" : "border-t-transparent"}
+                hover:bg-[#6464643b] duration-300 border-[#2a2a2a]`}
+      onClick={onClickedFile}>
       <RenderFileIcon filename={file.name} />
-      <span className="cursor-pointer hover:bg-[#64646473] duration-300 flex justify-center items-center w-fit mr-2 p-1 rounded-md">
+      <span className="cursor-pointer flex justify-center items-center w-fit mr-2 p-1 rounded-md">
         {file.name}
       </span>
-      <span className="cursor-pointer hover:bg-[#64646473] duration-300 flex justify-center items-center w-fit mr-2 p-1 rounded-md">
+      <span className="cursor-pointer hover:bg-[#64646473] duration-300 flex justify-center items-center w-fit mr-1 rounded-md">
         <CloseIcon />
       </span>
     </div>

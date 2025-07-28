@@ -2,11 +2,12 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IClickedFile, IFile, IOpenedFile } from "../../interfaces";
 
 const initialState: IOpenedFile = {
+  activeTabId: null,
   openedFiles: [],
   clickedFile: {
     fileName: "",
     fileContent: "",
-  }
+  },
 };
 
 export const fileTreeSlice = createSlice({
@@ -17,12 +18,14 @@ export const fileTreeSlice = createSlice({
       state.openedFiles = action.payload;
     },
     setClickedFile: (state, action: PayloadAction<IClickedFile>) => {
-      state.clickedFile.fileName = action.payload.fileName;
-      state.clickedFile.fileContent = action.payload.fileContent;
+      state.clickedFile = action.payload;
+    },
+    setActiveTabId: (state, action: PayloadAction<string | null>) => {
+      state.activeTabId = action.payload;
     },
   },
 })
 
-export const { setOpenedFiles, setClickedFile } = fileTreeSlice.actions;
+export const { setOpenedFiles, setClickedFile, setActiveTabId } = fileTreeSlice.actions;
 
 export default fileTreeSlice.reducer;

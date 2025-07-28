@@ -92,7 +92,7 @@ export const fileTree: IFile = {
               const App = () => {
                 return <h3>App</h3>
               }
-              export defualt App;
+              export default App;
             `
         },
         {
