@@ -6,10 +6,12 @@ export interface IFile {
   content?: string;
 }
 
+export interface IClickedFile {
+  fileName: string;
+  fileContent: string | undefined;
+}
+
 export interface IOpenedFile {
-  openedFile: IFile[];
-  clickedFile: {
-    fileName: string;
-    fileContent: string;
-  };
+  openedFiles: IFile[];
+  clickedFile: IClickedFile;
 }

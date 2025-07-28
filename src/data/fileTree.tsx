@@ -85,6 +85,15 @@ export const fileTree: IFile = {
           id: uuid(),
           name: "App.tsx",
           isFolder: false,
+          content:
+            `
+              import FileSyntaxHighlighter from "./components/FileSyntaxHighlighter"
+              import OpenedFilesBar from "./components/OpenedFilesBar"
+              const App = () => {
+                return <h3>App</h3>
+              }
+              export defualt App;
+            `
         },
         {
           id: uuid(),

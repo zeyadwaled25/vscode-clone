@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { IFile, IOpenedFile } from "../../interfaces";
+import type { IClickedFile, IFile, IOpenedFile } from "../../interfaces";
 
 const initialState: IOpenedFile = {
-  openedFile: [],
+  openedFiles: [],
   clickedFile: {
     fileName: "",
     fileContent: "",
@@ -13,12 +13,16 @@ export const fileTreeSlice = createSlice({
   name: "fileTree",
   initialState,
   reducers: {
-    setOpenedFile: (state, action: PayloadAction<IFile[]>) => {
-      state.openedFile = action.payload;
-    }
+    setOpenedFiles: (state, action: PayloadAction<IFile[]>) => {
+      state.openedFiles = action.payload;
+    },
+    setClickedFile: (state, action: PayloadAction<IClickedFile>) => {
+      state.clickedFile.fileName = action.payload.fileName;
+      state.clickedFile.fileContent = action.payload.fileContent;
+    },
   },
 })
 
-export const { setOpenedFile } = fileTreeSlice.actions;
+export const { setOpenedFiles, setClickedFile } = fileTreeSlice.actions;
 
 export default fileTreeSlice.reducer;

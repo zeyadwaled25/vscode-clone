@@ -4,7 +4,7 @@ import BottomArrowIcon from "./svg/Bottom";
 import RightArrowIcon from "./svg/Right";
 import RenderFileIcon from "./RenderFileIcon";
 import { useAppDispatch, type RootState } from "../app/store";
-import { setOpenedFile } from "../app/features/fileTreeSlice";
+import { setOpenedFiles } from "../app/features/fileTreeSlice";
 import { useSelector } from "react-redux";
 import { doesFileExist } from "../utils/functions";
 
@@ -17,18 +17,18 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
   // Dispatch
   const dispatch = useAppDispatch();
   // Selectors
-  const openedFile = useSelector((state: RootState) => state.fileTree.openedFile);
+  const openedFiles = useSelector((state: RootState) => state.fileTree.openedFiles);
 
   // Handler
   const toggle = () => setIsOpen(prev => !prev);
   const onFileClick = () => {
-    const exists = doesFileExist(openedFile, fileTree.id);
+    const exists = doesFileExist(openedFiles, fileTree.id);
     if (exists) return;
-    dispatch(setOpenedFile([...openedFile, fileTree]));
+    dispatch(setOpenedFiles([...openedFiles , fileTree]));
   };
 
   return (
-    <div className="mb-2 ml-2 cursor-pointer">
+    <div className="cursor-pointer">
       <div className="flex items-center mb-1">
         {fileTree.isFolder ? (
           <div onClick={toggle} className="flex items-center">
