@@ -6,6 +6,7 @@ import RenderFileIcon from "./RenderFileIcon";
 import { useAppDispatch, type RootState } from "../app/store";
 import { setOpenedFile } from "../app/features/fileTreeSlice";
 import { useSelector } from "react-redux";
+import { doesFileExist } from "../utils/functions";
 
 interface IProps {
   fileTree: IFile;
@@ -20,6 +21,12 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
 
   // Handler
   const toggle = () => setIsOpen(prev => !prev);
+  const onFileClick = () => {
+    const exists = doesFileExist(openedFile, fileTree.id);
+    if (exists) return;
+    dispatch(setOpenedFile([...openedFile, fileTree]));
+  };
+
   return (
     <div className="mb-2 ml-2 cursor-pointer">
       <div className="flex items-center mb-1">
@@ -30,7 +37,7 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
             <span className="ml-1">{fileTree.name}</span>
           </div>
         ) : (
-          <div className="flex items-center" onClick={() => dispatch(setOpenedFile([...openedFile, fileTree]))}>
+          <div className="flex items-center" onClick={onFileClick}>
             <span className="mr-1">
               <RenderFileIcon filename={fileTree.name} />
             </span>
