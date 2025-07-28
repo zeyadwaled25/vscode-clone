@@ -10,9 +10,10 @@ import { doesFileExist } from "../utils/functions";
 
 interface IProps {
   fileTree: IFile;
+  isRoot?: boolean;
 }
 
-const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
+const FileSyntaxHighlighter = ({ fileTree, isRoot }: IProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   // Dispatch
   const dispatch = useAppDispatch();
@@ -32,7 +33,7 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
   };
 
   return (
-    <div className="cursor-pointer">
+    <div className={isRoot ? "cursor-pointer" : "ml-2 cursor-pointer"}>
       <div className="flex items-center mb-1">
         {fileTree.isFolder ? (
           <div onClick={toggle} className="flex items-center">
@@ -51,7 +52,7 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
       </div>
       { 
         isOpen && fileTree.children && fileTree.children.map((file, index) => (
-          <FileSyntaxHighlighter key={index} fileTree={file} />
+          <FileSyntaxHighlighter key={index} fileTree={file} isRoot={false} />
         ))
       }
     </div>
