@@ -7,12 +7,12 @@ export interface IFile {
 }
 
 export interface IClickedFile {
+  activeTabId: string | null;
   fileName: string;
   fileContent: string | undefined;
 }
 
 export interface IOpenedFile {
-  activeTabId: string | null;
   openedFiles: IFile[];
   clickedFile: IClickedFile;
 }
