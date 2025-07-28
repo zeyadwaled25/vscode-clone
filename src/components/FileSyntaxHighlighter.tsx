@@ -4,7 +4,7 @@ import BottomArrowIcon from "./svg/Bottom";
 import RightArrowIcon from "./svg/Right";
 import RenderFileIcon from "./RenderFileIcon";
 import { useAppDispatch, type RootState } from "../app/store";
-import { setActiveTabId, setOpenedFiles } from "../app/features/fileTreeSlice";
+import { setActiveTabId, setClickedFile, setOpenedFiles } from "../app/features/fileTreeSlice";
 import { useSelector } from "react-redux";
 import { doesFileExist } from "../utils/functions";
 
@@ -23,9 +23,14 @@ const FileSyntaxHighlighter = ({ fileTree }: IProps) => {
   const toggle = () => setIsOpen(prev => !prev);
   const onFileClick = () => {
     const exists = doesFileExist(openedFiles, fileTree.id);
-    if (exists) return;
+    if (exists) {
+      dispatch(setActiveTabId(fileTree.id));
+      dispatch(setClickedFile({ fileName: fileTree.name, fileContent: fileTree.content }));
+      return;
+    };
     dispatch(setOpenedFiles([...openedFiles , fileTree]));
     dispatch(setActiveTabId(fileTree.id));
+    dispatch(setClickedFile({ fileName: fileTree.name, fileContent: fileTree.content }));
   };
 
   return (
