@@ -1,4 +1,4 @@
-import FileSyntaxHighlighter from "./components/FileSyntaxHighlighter"
+import FileSyntaxHighlighter from "./components/RecursiveComponent"
 import OpenedFilesBar from "./components/OpenedFilesBar"
 import { fileTree } from "./data/fileTree"
 
