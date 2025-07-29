@@ -11,18 +11,22 @@ interface IProps {
 
 const OpenedFilesBarTap = ({ file }: IProps) => {
   const dispatch = useAppDispatch();
-  const {openedFiles, clickedFile} = useSelector((state: RootState) => state.fileTree);
+  const { openedFiles, clickedFile } = useSelector((state: RootState) => state.fileTree);
 
   const onClickedFile = () => {
     dispatch(setClickedFile({ fileName: file.name, fileContent: file.content, activeTabId: file.id }));
   }
 
   const onRmove = (selectedId: string) => {
-    const filtered = openedFiles.filter((file) => file.id != selectedId)
-    const {id, name, content} = filtered[filtered.length - 1]
-
-    dispatch(setOpenedFiles([...filtered]))
-    dispatch(setClickedFile({fileName: name, fileContent: content, activeTabId: id}))
+    const filtered = openedFiles.filter(file => file.id !== selectedId);
+    const lastTab = filtered[filtered.length - 1];
+    if (!lastTab) {
+      dispatch(setOpenedFiles([]));
+      dispatch(setClickedFile({ fileName: "", fileContent: "", activeTabId: null }));
+      return;
+    }
+    dispatch(setOpenedFiles(filtered));
+    dispatch(setClickedFile({ fileName: lastTab.name, fileContent: lastTab.content, activeTabId: lastTab.id }));
   }
 
   return (
