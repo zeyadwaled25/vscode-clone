@@ -6,9 +6,10 @@ interface IProps {
 }
 
 const FileSyntaxHighlighter = ({ content }: IProps) => {
+  if (!content) return null;
   return (
     <SyntaxHighlighter
-      language="javascript" 
+      language="javascript"
       style={atomOneDark}
       customStyle={{
         width: "100%",
