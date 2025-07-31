@@ -1,9 +1,13 @@
-import OpenedFilesBar from "./components/OpenedFilesBar"
 import { fileTree } from "./data/fileTree"
 import RecursiveComponent from "./components/RecursiveComponent"
 import ResizablePanel from "./components/ResizablePanel"
+import Preview from "./components/Preview"
+import { useSelector } from "react-redux"
+import type { RootState } from "./app/store"
+import WelcomeTap from "./components/WelcomeTap"
 
 const App = () => {
+  const { openedFiles } = useSelector((state: RootState) => state.fileTree);
 
   return (
     <div className="app">
@@ -14,7 +18,7 @@ const App = () => {
               <RecursiveComponent fileTree={fileTree} isRoot={true} />
             </div>
           }
-          rightSide={<OpenedFilesBar />}
+          rightSide={openedFiles.length ? <Preview /> : <WelcomeTap />}
         />
       </div>
     </div>

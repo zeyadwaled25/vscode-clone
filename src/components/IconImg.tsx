@@ -1,10 +1,11 @@
 interface IProps {
   src: string;
+  className?: string
 }
 
-const IconImg = ({src}: IProps) => {
+const IconImg = ({src, className="w-5 h-5"}: IProps) => {
   return (
-    <img src={src} className="w-5 h-5" alt="" />
+    <img src={src} className={className} alt="" />
   );
 }
 
