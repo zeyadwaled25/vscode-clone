@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Li from "./Li";
-import { setOpenedFiles } from "../../app/features/fileTreeSlice";
+import { setClickedFile, setOpenedFiles } from "../../app/features/fileTreeSlice";
 import { useAppDispatch, type RootState } from "../../app/store";
 import { useSelector } from "react-redux";
 
@@ -32,20 +32,36 @@ const ContextMenu = ({ positions, setShowMenu }: IProps) => {
   const dispatch = useAppDispatch();
   const { openedFiles, tabIdToRemove } = useSelector((state: RootState) => state.fileTree);
 
-  const onCLose = () => {
+  const onClose = () => {
     const filtered = openedFiles.filter(file => file.id !== tabIdToRemove);
+    const lastTab = filtered[filtered.length - 1];
+
     dispatch(setOpenedFiles(filtered));
-    setShowMenu(false)
-  }
+
+    if (lastTab) {
+      dispatch(setClickedFile({ fileName: lastTab.name, fileContent: lastTab.content, activeTabId: lastTab.id }));
+    } else {
+      dispatch(setClickedFile({ fileName: "", fileContent: "", activeTabId: null }));
+    }
+
+    setShowMenu(false);
+  };
+
   const onCloseOthers = () => {
-  const filtered = openedFiles.filter(file => file.id === tabIdToRemove);
-  dispatch(setOpenedFiles(filtered));
-  setShowMenu(false);
-};
-  const onCLoseAll = () => {
+    const selectedTab = openedFiles.find(file => file.id === tabIdToRemove);
+    if (!selectedTab) return;
+
+    dispatch(setOpenedFiles([selectedTab]));
+    dispatch(setClickedFile({ fileName: selectedTab.name, fileContent: selectedTab.content, activeTabId: selectedTab.id }));
+    setShowMenu(false);
+  };
+
+  const onCloseAll = () => {
     dispatch(setOpenedFiles([]));
-    setShowMenu(false)
-  }
+    dispatch(setClickedFile({ fileName: "", fileContent: "", activeTabId: null }));
+    setShowMenu(false);
+  };
+
 
   return (
     <ul
@@ -58,9 +74,9 @@ const ContextMenu = ({ positions, setShowMenu }: IProps) => {
         zIndex: 1000,
       }}
     >
-      <Li liName="Close" onClick={onCLose} tooltip={"Say goodbye to this tab 👋"} />
+      <Li liName="Close" onClick={onClose} tooltip={"Say goodbye to this tab 👋"} />
       <Li liName="Close Others" onClick={onCloseOthers} tooltip={`Just you and me now 😂`} />
-      <Li liName="Close All" onClick={onCLoseAll} tooltip={"Peace. Silence. No tabs 🕊️"} />
+      <Li liName="Close All" onClick={onCloseAll} tooltip={"Peace. Silence. No tabs 🕊️"} />
     </ul>
   );
 };
