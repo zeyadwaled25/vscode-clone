@@ -33,7 +33,7 @@ const RecursiveComponent = ({ fileTree, isRoot }: IProps) => {
   };
 
   return (
-    <div className={isRoot ? "cursor-pointer" : "ml-2 cursor-pointer"}>
+    <div className={isRoot ? "cursor-pointer" : "ml-2.5 cursor-pointer"}>
       <div className="flex items-center mb-1">
         {fileTree.isFolder ? (
           <div onClick={toggle} className="flex items-center">
