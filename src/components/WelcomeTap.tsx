@@ -1,4 +1,5 @@
 import IconImg from "./IconImg";
+import { motion } from "framer-motion";
 
 const WelcomeTap = () => {
   return (
@@ -10,12 +11,21 @@ const WelcomeTap = () => {
         <p>The best code editor, now in your browser</p>
         <p>Made with using React + Ts.</p>
       </div>
-      <IconImg
-        src="/icons/vscode.svg"
-        alt="VSCode"
-        title="Click to launch VSCode vibes"
-        className="w-40 md:w-52 lg:w-64 transition-all duration-300 transform cursor-pointer drop-shadow-[0_0_15px_#2196f3] hover:scale-105 hover:drop-shadow-[0_0_35px_#2196f3]"
-      />
+      <motion.a
+        href="https://code.visualstudio.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0, scale: 0.3 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.7 }}
+      >
+        <IconImg
+          src="/icons/vscode.svg"
+          alt="VSCode"
+          title="Click to launch VSCode vibes"
+          className="w-40 md:w-52 lg:w-64 transition-all duration-300 transform cursor-pointer drop-shadow-[0_0_15px_#2196f3] hover:scale-105 hover:drop-shadow-[0_0_35px_#2196f3]"
+        />
+      </motion.a>
     </div>
   );
 }
