@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
 import Li from "./Li";
+import { setOpenedFiles } from "../../app/features/fileTreeSlice";
+import { useAppDispatch, type RootState } from "../../app/store";
+import { useSelector } from "react-redux";
 
 interface IProps {
   positions: {
@@ -10,6 +13,7 @@ interface IProps {
 }
 
 const ContextMenu = ({ positions, setShowMenu }: IProps) => {
+  // Menu Ref
   const menuRef = useRef<HTMLUListElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -24,6 +28,25 @@ const ContextMenu = ({ positions, setShowMenu }: IProps) => {
     }
   }, [setShowMenu])
 
+  // Close Actions
+  const dispatch = useAppDispatch();
+  const { openedFiles, tabIdToRemove } = useSelector((state: RootState) => state.fileTree);
+
+  const onCLose = () => {
+    const filtered = openedFiles.filter(file => file.id !== tabIdToRemove);
+    dispatch(setOpenedFiles(filtered));
+    setShowMenu(false)
+  }
+  const onCloseOthers = () => {
+  const filtered = openedFiles.filter(file => file.id === tabIdToRemove);
+  dispatch(setOpenedFiles(filtered));
+  setShowMenu(false);
+};
+  const onCLoseAll = () => {
+    dispatch(setOpenedFiles([]));
+    setShowMenu(false)
+  }
+
   return (
     <ul
       ref={menuRef}
@@ -35,12 +58,9 @@ const ContextMenu = ({ positions, setShowMenu }: IProps) => {
         zIndex: 1000,
       }}
     >
-      <Li liName="Close" />
-      <Li liName="Close Others" />
-      <Li liName="Close All" />
-      <li className="border-t border-[#3c3c3c] my-1"></li>
-      <Li liName="Rename" />
-      <Li liName="Delete" />
+      <Li liName="Close" onClick={onCLose} tooltip={"Say goodbye to this tab 👋"} />
+      <Li liName="Close Others" onClick={onCloseOthers} tooltip={`Just you and me now 😂`} />
+      <Li liName="Close All" onClick={onCLoseAll} tooltip={"Peace. Silence. No tabs 🕊️"} />
     </ul>
   );
 };

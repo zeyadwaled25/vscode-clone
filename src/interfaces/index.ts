@@ -15,4 +15,5 @@ export interface IClickedFile {
 export interface IOpenedFile {
   openedFiles: IFile[];
   clickedFile: IClickedFile;
+  tabIdToRemove: string | null
 }

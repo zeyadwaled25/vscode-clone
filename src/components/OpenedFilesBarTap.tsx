@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { setClickedFile, setOpenedFiles } from "../app/features/fileTreeSlice";
+import { setClickedFile, setOpenedFiles, setTapIdToRemove } from "../app/features/fileTreeSlice";
 import { useAppDispatch, type RootState } from "../app/store";
 import type { IFile } from "../interfaces";
 import RenderFileIcon from "./RenderFileIcon";
@@ -34,7 +34,12 @@ const OpenedFilesBarTap = ({ file }: IProps) => {
       className={`flex items-center border px-1 border-t-2 border-b-0
                 ${clickedFile.activeTabId === file.id ? "border-t-[#cf6ccf]" : "border-t-transparent"}
                 hover:bg-[#6464643b] duration-300 border-[#2a2a2a]`}
-      onClick={onClickedFile}>
+      onClick={onClickedFile}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        dispatch(setTapIdToRemove(file.id))
+      }}
+    >
       <RenderFileIcon filename={file.name} />
       <span className="cursor-pointer flex justify-center items-center w-fit mr-2 p-1 rounded-md">
         {file.name}
