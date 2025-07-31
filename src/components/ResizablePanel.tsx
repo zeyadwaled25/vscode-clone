@@ -8,7 +8,7 @@ interface IProps {
 }
 
 
-const ResizablePanel = ({ defaultLayout = [33, 67], leftSide, rightSide }: IProps) => {
+const ResizablePanel = ({ defaultLayout = [25, 75], leftSide, rightSide }: IProps) => {
   const onLayout = (sizes: number[]) => {
     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
   };
